@@ -1,0 +1,24 @@
+{
+  "name": "starbug/resource-locator",
+  "description": "Locate files and classes from a list of modules.",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Ali Gangji",
+      "homepage": "https://github.com/cogentParadigm"
+    }
+  ],
+  "config": {
+    "platform": {
+      "php": "7.3"
+    }
+  },
+  "require-dev": {
+    "starbug/devel": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Starbug\\ResourceLocator\\": "src/"
+    }
+  }
+}
