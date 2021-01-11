@@ -3,20 +3,17 @@ namespace Starbug\ResourceLocator;
 
 interface ResourceLocatorInterface {
   /**
-   * Get the path for a specified module namespace
+   * Set the list of namespaces for className lookups.
    *
-   * @param string $namespace The namespace to lookup.
-   *
-   * @return string The path of the corresponding module.
+   * @param array $namespaces The namespaces.
    */
-  public function get($namespace) : string;
+  public function setNamespaces(array $namespaces);
   /**
-   * Set the path for a specified module namespace.
+   * Set the list of paths for file lookups.
    *
-   * @param string $namespace The namespace.
-   * @param string $path The path to the corresponding module.
+   * @param array $paths The paths.
    */
-  public function set($namespace, $path);
+  public function setPaths(array $paths);
   /**
    * Locate a file by name and module sub-directory.
    *

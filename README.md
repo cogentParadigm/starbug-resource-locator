@@ -1,23 +1,28 @@
 # Resource Locator
 
-The ResourceLocator class locates files and classes within list of modules. The modules passed to ResourceLocator must pre-ordered, as this package does not provide dependency resolution / topological sorting.
+The ResourceLocator class locates files and classes within directories and namespaces.
 
 Basic example:
 
 ```php
 use Starbug\ResourceLocator\ResourceLocator;
 
-$modules = [
-  "Starbug\Core" => "core",
-  "Starbug\Log" => "modules/log",
-  "Starbug\State" => "modules/state",
-  "Starbug\Var" => "var"
+$namespaces = [
+  "Starbug\Core",
+  "Starbug\Log",
+  "Starbug\State",
+  "Starbug\Var"
+]
+$paths = [
+  "core",
+  "modules/log",
+  "modules/state",
+  "var"
 ]
 
-$locator = new ResourceLocator(dirname(__FILE__), $modules);
-
-// This will return "modules/log"
-$locator->get("Starbug\Log");
+$locator = new ResourceLocator(dirname(__FILE__));
+$locator->setNamespaces($namespaces);
+$locator->setPaths($paths);
 
 // This will check each module for a file at the path
 // "etc/config.json" and return an array of matches.

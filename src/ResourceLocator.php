@@ -4,25 +4,25 @@ namespace Starbug\ResourceLocator;
 class ResourceLocator implements ResourceLocatorInterface {
 
   protected $base_directory;
-  protected $modules;
+  protected $namespaces = [];
+  protected $paths = [];
 
-  public function __construct($base_directory = "", $modules = []) {
+  public function __construct($base_directory = "") {
     $this->base_directory = $base_directory;
-    $this->modules = $modules;
   }
 
   /**
    * {@inheritDoc}
    */
-  public function get($mid) : string {
-    return $this->modules[$mid];
+  public function setNamespaces(array $namespaces) {
+    $this->namespaces = $namespaces;
   }
 
   /**
    * {@inheritDoc}
    */
-  public function set($mid, $path) {
-    $this->modules[$mid] = $path;
+  public function setPaths(array $paths) {
+    $this->paths = $paths;
   }
 
   /**
@@ -32,9 +32,9 @@ class ResourceLocator implements ResourceLocatorInterface {
     if (!empty($scope)) $scope .= "/";
     $path = $scope.$name;
     $paths = [];
-    foreach ($this->modules as $mid => $module_path) {
-      $target = $this->base_directory."/".$module_path."/".$path;
-      if (file_exists($target)) $paths[$mid] = $target;
+    foreach ($this->paths as $dir) {
+      $target = $this->base_directory."/".$dir."/".$path;
+      if (file_exists($target)) $paths[$dir] = $target;
     }
     return $paths;
   }
@@ -48,7 +48,7 @@ class ResourceLocator implements ResourceLocatorInterface {
         $class = $class.$suffix;
       }
       $class = $this->formatClassName($class);
-      for (end($this->modules); ($mid = key($this->modules)) !== null; prev($this->modules)) {
+      for (end($this->namespaces); ($mid = current($this->namespaces)) !== null; prev($this->namespaces)) {
         if (class_exists($mid."\\".$class)) return $mid."\\".$class;
       }
     } else {
