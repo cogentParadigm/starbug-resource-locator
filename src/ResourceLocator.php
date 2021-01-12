@@ -48,8 +48,8 @@ class ResourceLocator implements ResourceLocatorInterface {
         $class = $class.$suffix;
       }
       $class = $this->formatClassName($class);
-      for (end($this->namespaces); ($mid = current($this->namespaces)) !== null; prev($this->namespaces)) {
-        if (class_exists($mid."\\".$class)) return $mid."\\".$class;
+      for ($i = count($this->namespaces) - 1; $i >= 0; $i--) {
+        if (class_exists($this->namespaces[$i]."\\".$class)) return $this->namespaces[$i]."\\".$class;
       }
     } else {
       return $class;
